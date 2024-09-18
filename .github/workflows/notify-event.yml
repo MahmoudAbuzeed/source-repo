@@ -1,0 +1,33 @@
+name: Notify Other Repos After Workflow Completion
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Notify First Target Repository
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          https://api.github.com/repos/MahmoudAbuzeed/listener-repo1/dispatches \
+          -d '{"event_type":"workflow_completed", "client_payload":{ "source_repo":"${{ github.repository }}"}}'
+
+      - name: Notify Second Target Repository
+        run: |
+          curl -X POST \
+          -H "Authorization: token ${{ secrets.PERSONAL_ACCESS_TOKEN }}" \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          https://api.github.com/repos/MahmoudAbuzeed/listener-repo2/dispatches \
+          -d '{"event_type":"workflow_completed", "client_payload":{ "source_repo":"${{ github.repository }}"}}'
+
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
