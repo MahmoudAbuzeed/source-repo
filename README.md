@@ -93,4 +93,4 @@ This setup relies on GitHub's REST API to trigger workflows in other repositorie
 
 This setup allows you to notify multiple repositories when a workflow completes in the source repository, using the `repository_dispatch` event and GitHub Actions. This approach is scalable and can be easily extended by adding more target repositories in the source workflow.
 
-Feel free to customize this further based on your specific use case.
+Feel free to customize this further based on your specific use case
